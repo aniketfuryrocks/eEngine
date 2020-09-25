@@ -18,7 +18,6 @@ fn main() {
         App::new(AppSettings {
             window_settings: WindowSettings::new("AwsmGame", [200, 200]).exit_on_esc(true),
             gl_ver: OpenGL::V4_5,
-            events: Events::new(EventSettings::new()),
         })
     );
     //add a rigid body
@@ -27,14 +26,15 @@ fn main() {
         shape: RigidShape::RECTANGLE,
     }));
 
-    eng.start(Box::new(|eng, e| {
-        if let Some(args) = e.render_args() {
+    let mut events = Events::new(EventSettings::new());
 
+    while let Some(e) = events.next(&mut eng.app.window) {
+        if let Some(args) = e.render_args() {
             let mut player = eng.objects.get_mut("player").unwrap();
             player.shape = RigidShape::ELLIPSE;
             /*eng.draw(&args);
             player
             println!("{:?}", player.shape)*/
         }
-    }));
+    }
 }

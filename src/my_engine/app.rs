@@ -6,13 +6,11 @@ use piston::Events;
 pub struct AppSettings {
     pub window_settings: WindowSettings,
     pub gl_ver: OpenGL,
-    pub events: Events,
 }
 
 pub struct App {
     pub window: GlutinWindow,
-    pub gl: GlGraphics,
-    pub events: Events,
+    pub gl: GlGraphics
 }
 
 impl App {
@@ -20,7 +18,6 @@ impl App {
         App {
             window: settings.window_settings.graphics_api(settings.gl_ver).build().unwrap(),
             gl: GlGraphics::new(settings.gl_ver),
-            events: settings.events
         }
     }
 }

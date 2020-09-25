@@ -21,10 +21,4 @@ impl<T:Object> MyEngine<T> {
 
         })
     }
-
-    pub fn start(&mut self,callback: Box<dyn Fn(&mut MyEngine<T>, Event)>) {
-        while let Some(e) = self.app.events.next(&mut self.app.window) {
-            callback(self,e as Event);
-        }
-    }
 }
