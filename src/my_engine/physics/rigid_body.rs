@@ -13,8 +13,13 @@ pub struct RigidBody {
     pub shape:RigidShape
 }
 
-impl Object for RigidBody {
+impl ObjectProps for RigidBody {
     fn draw(&self) {
         self.pos[0];
+    }
+
+    fn collides(&self,object: &Object) {
+      //  let body = object as RigidBody;
+        //object.
     }
 }

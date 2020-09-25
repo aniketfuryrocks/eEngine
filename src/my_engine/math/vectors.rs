@@ -1,4 +1,4 @@
-use std::ops::Index;
+use std::ops::{Index, IndexMut};
 
 pub struct Vector2D<T> {
     pub x:T,
@@ -13,6 +13,16 @@ impl<T> Index<i8> for Vector2D<T> {
             0=> &self.x,
             1=> &self.y,
             _=> panic!("Vector2D index out of bounds")
+        }
+    }
+}
+
+impl<T> IndexMut<i8> for Vector2D<T> {
+    fn index_mut(&mut self, index: i8) -> &mut Self::Output {
+        match index {
+            0=> &mut self.x,
+            1=> &mut self.y,
+            _=> panic!("Vector2D Mutable Borrow, index out of bounds")
         }
     }
 }

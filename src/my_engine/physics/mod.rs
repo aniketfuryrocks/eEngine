@@ -1,4 +1,4 @@
-mod rigind_body;
+mod rigid_body;
 mod object;
-pub use rigind_body::*;
+pub use rigid_body::*;
 pub use object::*;
