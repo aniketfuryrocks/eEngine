@@ -19,20 +19,23 @@ fn main() {
         })
     );
 
-    let mut events = Events::new(EventSettings::new());
-
-    let player = Box::new(RigidBody {
-        pos : Vector2D {x:2.,y:2.},
-        shape : RigidShape::RECTANGLE
-    });
     //add a rigid body
-    eng.objects.push(&player);
+    let player = eng.spawn(RigidBody {
+            pos: Vector2D { x: 2., y: 2. },
+            shape: RigidShape::RECTANGLE
+        });
 
-    &player.shape;
-
-    while let Some(e) = events.next(&mut eng.app.window) {
+    //loop
+    let mut events = Events::new(EventSettings::new());
+    let window = &mut eng.app.window;
+    while let Some(e) = events.next(window) {
+        //logic
         if let Some(args) = e.render_args() {
             eng.draw(&args);
+            println!("asd,{}",player.pos.x);
+          //  player.pos[1] = 2.;
+            /*player.pos[0] = 1.;
+            player.pos[1] = 1.;*/
         }
     }
 }
