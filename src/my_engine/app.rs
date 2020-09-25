@@ -1,22 +1,26 @@
 use glutin_window::GlutinWindow;
 use piston::window::{WindowSettings};
-use opengl_graphics::{GlGraphics,OpenGL};
+use opengl_graphics::{GlGraphics, OpenGL};
+use piston::Events;
 
-pub struct AppSettings{
+pub struct AppSettings {
     pub window_settings: WindowSettings,
-    pub gl_ver: OpenGL
+    pub gl_ver: OpenGL,
+    pub events: Events,
 }
 
 pub struct App {
-    pub window : GlutinWindow,
-    pub gl:GlGraphics
+    pub window: GlutinWindow,
+    pub gl: GlGraphics,
+    pub events: Events,
 }
 
 impl App {
-    pub fn new(settings:AppSettings)->App{
+    pub fn new(settings: AppSettings) -> App {
         App {
-            window : settings.window_settings.graphics_api(settings.gl_ver).build().unwrap(),
-            gl: GlGraphics::new(settings.gl_ver)
+            window: settings.window_settings.graphics_api(settings.gl_ver).build().unwrap(),
+            gl: GlGraphics::new(settings.gl_ver),
+            events: settings.events
         }
     }
 }

@@ -1,22 +1,30 @@
 use crate::my_engine::{physics::* ,app::*};
 
-use piston::RenderArgs;
+use piston::{RenderArgs, Event, RenderEvent};
+use std::collections::{HashMap, HashSet};
 
-pub struct MyEngine<'a,T> where T: Object {
+pub struct MyEngine<T> where T: Object {
     pub app :App,
-    pub objects:Vec<&'a Box<T>>
+    pub objects:HashMap<String,Box<T>>
 }
 
-impl<T:Object> MyEngine<'_,T> {
-    pub fn new(app:App)->MyEngine<'static,T> {
+impl<T:Object> MyEngine<T> {
+    pub fn new(app:App)->MyEngine<T> {
         MyEngine {
             app,
-            objects : Vec::new()
+            objects : HashMap::new()
         }
     }
+
     pub fn draw(&mut self,args:&RenderArgs){
         self.app.gl.draw(args.viewport(), | c, gl| {
 
         })
+    }
+
+    pub fn start(&mut self,callback: Box<dyn Fn(&mut MyEngine<T>, Event)>) {
+        while let Some(e) = self.app.events.next(&mut self.app.window) {
+            callback(self,e as Event);
+        }
     }
 }

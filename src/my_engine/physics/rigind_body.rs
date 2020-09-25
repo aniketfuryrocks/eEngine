@@ -2,6 +2,7 @@ use crate::physics::*;
 use graphics::math::{Scalar};
 use crate::my_engine::math::Vector2D;
 
+#[derive(Debug)]
 pub enum RigidShape {
     RECTANGLE,
     ELLIPSE
