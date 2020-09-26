@@ -49,6 +49,19 @@ fn main() {
         mass: 2.0,
         velocity: 1.0
     })));
+    eng.objects.insert("player_3".to_string(), Box::new(Object::RigidBody(RigidBody {
+        shape: RigidShape::RECTANGLE(Rectangle {
+            width: 50.,
+            height: 50.,
+            color: [0.7,0.1,0.3,1.]
+        }),
+        center: Vector2D {
+            x: 500.0,
+            y: 700.0
+        },
+        mass: 2.0e4,
+        velocity: 1.0
+    })));
 
     let mut events = Events::new(EventSettings::new());
 
