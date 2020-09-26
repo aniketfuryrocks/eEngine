@@ -26,14 +26,16 @@ fn main() {
     for k in 0..colors.len() {
         eng.objects.insert(format!("player_{}",k), Box::new(Object::RigidBody(RigidBody {
             shape: RigidShape::RECTANGLE(Rectangle {
-                pos: Vector2D {
-                    x: 50.* (k) as f64,
-                    y: 50.* (k) as f64 *5 as f64,
-                },
                 width: 50.,
                 height: 50.,
                 color: colors[k]
-            })
+            }),
+            center: Vector2D {
+                x: 50.* (k) as f64,
+                y: 50.* (k) as f64 *5 as f64,
+            },
+            mass: 200.0,
+            velocity: 0.0
         })));
     }
 

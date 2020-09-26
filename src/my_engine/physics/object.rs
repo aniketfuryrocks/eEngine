@@ -8,7 +8,7 @@ pub enum Object {
 
 pub trait ObjectProps {
     fn draw(&self, c: &Context, g: &mut GlGraphics);
-    fn check_collisions(&mut self, obj: &mut Object);
+    fn check(&mut self, obj: &mut Object);
 }
 
 impl ObjectProps for Object {
@@ -18,9 +18,9 @@ impl ObjectProps for Object {
         }
     }
 
-    fn check_collisions(&mut self, obj: &mut Object) {
+    fn check(&mut self, obj: &mut Object) {
         match self {
-            Object::RigidBody(r) => r.check_collisions(obj)
+            Object::RigidBody(r) => r.check(obj)
         }
     }
 }
