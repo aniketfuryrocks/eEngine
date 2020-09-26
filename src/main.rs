@@ -23,21 +23,32 @@ fn main() {
     );
     let colors = [WHITE,GREEN];
     //add a rigid body
-    for k in 0..colors.len() {
-        eng.objects.insert(format!("player_{}",k), Box::new(Object::RigidBody(RigidBody {
-            shape: RigidShape::RECTANGLE(Rectangle {
-                width: 50.,
-                height: 50.,
-                color: colors[k]
-            }),
-            center: Vector2D {
-                x: 50.* (k) as f64,
-                y: 50.* (k) as f64 *5 as f64,
-            },
-            mass: 200.0,
-            velocity: 0.0
-        })));
-    }
+    eng.objects.insert("player_1".to_string(), Box::new(Object::RigidBody(RigidBody {
+        shape: RigidShape::RECTANGLE(Rectangle {
+            width: 50.,
+            height: 50.,
+            color: WHITE
+        }),
+        center: Vector2D {
+            x: 25.0,
+            y: 25.0
+        },
+        mass: 20.0e3,
+        velocity: 1.0
+    })));
+    eng.objects.insert("player_2".to_string(), Box::new(Object::RigidBody(RigidBody {
+        shape: RigidShape::RECTANGLE(Rectangle {
+            width: 50.,
+            height: 50.,
+            color: GREEN
+        }),
+        center: Vector2D {
+            x: 200.0,
+            y: 200.0
+        },
+        mass: 2.0,
+        velocity: 1.0
+    })));
 
     let mut events = Events::new(EventSettings::new());
 
@@ -45,7 +56,7 @@ fn main() {
         if let Some(args) = e.render_args() {
             if let Object::RigidBody(player) = eng.objects.get_mut("player_1").unwrap().as_mut() {
                 if let RigidShape::RECTANGLE(s) = &mut player.shape {
-                    s.pos.x+=1.;
+//                    s.pos.x+=1.;
                    // s.
                 }
             }

@@ -6,7 +6,7 @@ use graphics::math::Scalar;
 use graphics::triangulation::{tx, ty};
 
 //time for 1 frame in 60 fps for 1 second windows
-const TIME:f64 = 1./60.;
+const TIME:f64 = 1.0/25.0;
 const G_CONST:f64 = 6.673e-11;
 
 pub struct Rectangle {
@@ -46,7 +46,7 @@ impl RigidBody {
         let (sin_theta,cos_theta,r) =  {
             let y_diff = body.center.y - self.center.y;
             let x_diff = body.center.x - self.center.x;
-            let distance:f64 = ((y_diff).pow(2) * (x_diff).pow(2)).sqrt();
+            let distance:f64 = (y_diff*y_diff * x_diff * x_diff).sqrt();
             let theta = (y_diff/x_diff).atan();
             (theta.sin(),theta.cos(),distance)
         };
@@ -88,9 +88,11 @@ impl ObjectProps for RigidBody {
         match &self.shape {
             RigidShape::RECTANGLE(r) => {
                 g.tri_list(&c.draw_state, &r.color, |k| {
+                    let x = self.center.x - (r.width/2.);
+                    let y = self.center.y + (r.height/2.);
                     k(&triangulation::rect_tri_list_xy
                         (c.transform,
-                         [r.pos.x, r.pos.y, r.width, r.height])
+                         [x, y, r.width, r.height])
                     );
                 });
             }
@@ -100,8 +102,7 @@ impl ObjectProps for RigidBody {
     fn check(&mut self, obj: &mut Object) {
         match obj {
             Object::RigidBody(b) => {
-                self.calc_attr(r);
+                self.calc_attr(b);
             }
         }
-    }
-}
+    } }

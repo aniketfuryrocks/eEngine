@@ -31,7 +31,7 @@ impl MyEngine {
                 let mut l = values[x..len].iter_mut();
                 let x = l.next().unwrap();
                 for y in l {
-                    x.check_collisions(y);
+                    x.check(y);
                 }
                 x.draw(&context, &mut self.app.gl);
             }
