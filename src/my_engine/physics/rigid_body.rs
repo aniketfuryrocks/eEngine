@@ -6,7 +6,7 @@ use graphics::math::Scalar;
 use graphics::triangulation::{tx, ty};
 
 //time for 1 frame in 60 fps for 1 second windows
-const TIME: f64 = 1.0;
+const TIME: f64 = 1./60.;
 const G_CONST: f64 = 6.673e-11;
 
 pub struct Rectangle {
