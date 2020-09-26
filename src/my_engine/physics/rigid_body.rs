@@ -6,7 +6,7 @@ use graphics::math::Scalar;
 use graphics::triangulation::{tx, ty};
 
 //time for 1 frame in 60 fps for 1 second windows
-const TIME:f64 = 1.0/25.0;
+const TIME:f64 = 1.0;
 const G_CONST:f64 = 6.673e-11;
 
 pub struct Rectangle {
@@ -74,8 +74,8 @@ impl RigidBody {
             let ax = s * cos_theta;//x component
             let ay = s * sin_theta;//y component
             //resultant
-            body.center.x = ax + body.center.x;
-            body.center.y = ay + body.center.y;
+            body.center.x = body.center.x - ax;
+            body.center.y = body.center.y - ay;
         }
     }
 }
