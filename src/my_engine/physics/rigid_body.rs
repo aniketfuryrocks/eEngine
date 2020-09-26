@@ -6,9 +6,9 @@ use graphics::math::Scalar;
 use graphics::triangulation::{tx, ty};
 
 pub struct Rectangle {
-    pub pos:Vector2D<f32>,
-    pub width:f32,
-    pub height:f32,
+    pub pos:Vector2D<Scalar>,
+    pub width:Scalar,
+    pub height:Scalar,
     pub color:[f32;4]
 }
 
@@ -27,7 +27,7 @@ impl ObjectProps for RigidBody {
                 g.tri_list(&c.draw_state,&r.color,|k|{
                     k(&triangulation::rect_tri_list_xy
                         (c.transform,
-                        [r.pos.x as f64, r.pos.y as f64, r.width as f64, r.height as f64])
+                        [r.pos.x, r.pos.y, r.width, r.height])
                     );
                     //implementation of above
                     /*let (x, y, w, h) = (r.pos.x as f64 , r.pos.y as f64 , r.width as f64, r.height as f64);
