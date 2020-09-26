@@ -6,43 +6,46 @@ use graphics::math::Scalar;
 use graphics::triangulation::{tx, ty};
 
 pub struct Rectangle {
-    pub pos:Vector2D<Scalar>,
-    pub width:Scalar,
-    pub height:Scalar,
-    pub color:[f32;4]
+    pub pos: Vector2D<Scalar>,
+    pub width: Scalar,
+    pub height: Scalar,
+    pub gravity: Scalar,
+    pub color: [f32; 4],
 }
+
+impl Rectangle {
+    fn new() -> Rectangle {
+        Rectangle {
+            pos: Vector2D {
+                x: 0.,
+                y: 0.,
+            },
+            width: 0.0,
+            height: 0.0,
+            gravity: 0.0,
+            color: [0., 0., 0., 0.],
+        }
+    }
+}
+
 
 pub enum RigidShape {
     RECTANGLE(Rectangle)
 }
 
 pub struct RigidBody {
-    pub shape:RigidShape
+    pub shape: RigidShape
 }
 
 impl ObjectProps for RigidBody {
     fn draw(&self, c: &Context, g: &mut GlGraphics) {
         match &self.shape {
             RigidShape::RECTANGLE(r) => {
-                g.tri_list(&c.draw_state,&r.color,|k|{
+                g.tri_list(&c.draw_state, &r.color, |k| {
                     k(&triangulation::rect_tri_list_xy
                         (c.transform,
-                        [r.pos.x, r.pos.y, r.width, r.height])
+                         [r.pos.x, r.pos.y, r.width, r.height])
                     );
-                    //implementation of above
-                    /*let (x, y, w, h) = (r.pos.x as f64 , r.pos.y as f64 , r.width as f64, r.height as f64);
-                    let (x2, y2) = (x + w, y + h);
-                    let m = c.transform;
-                    k(&[[tx(m, x, y), ty(m, x, y)],
-                        [tx(m, x2, y), ty(m, x2, y)],
-                        [tx(m, x, y2), ty(m, x, y2)],
-                        [tx(m, x2, y), ty(m, x2, y)],
-                        [tx(m, x2, y2), ty(m, x2, y2)],
-                        [tx(m, x, y2), ty(m, x, y2)]])*/
-                    /*
-                    let (x, y, w, h) = (r.pos.x  , r.pos.y  , r.width , r.height );
-                    k(&[[x,y],[x+w,y+h],[x+123.,y+123.],
-                        [x,y],[x+w,y+h],[x+123.,y+123.]])*/
                 });
             }
         }
@@ -50,14 +53,11 @@ impl ObjectProps for RigidBody {
 
     fn check_collisions(&mut self, obj: &mut Object) {
         match obj {
-            Object::RigidBody(b)=> {
+            Object::RigidBody(b) => {
                 match &mut b.shape {
-                    RECTANGLE=> {
-
-                    }
+                    RECTANGLE => {}
                 }
             }
         }
     }
-
 }

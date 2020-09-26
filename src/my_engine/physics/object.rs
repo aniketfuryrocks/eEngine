@@ -3,7 +3,7 @@ use graphics::Context;
 use opengl_graphics::GlGraphics;
 
 pub enum Object {
-    RigidBody(RigidBody)
+    RigidBody(RigidBody),
 }
 
 pub trait ObjectProps {
