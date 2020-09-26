@@ -6,6 +6,7 @@ use crate::my_engine::physics::{RigidBody, RigidShape, Object, Rectangle};
 use crate::my_engine::math::Vector2D;
 use graphics::line::Shape::Square;
 use crate::my_engine::*;
+use graphics::clear;
 
 //const
 const GREEN: [f32; 4] = [0.0, 1.0, 0.0, 1.0];
@@ -20,17 +21,18 @@ fn main() {
             gl_ver: OpenGL::V4_5,
         })
     );
+    let colors = [WHITE,GREEN];
     //add a rigid body
-    for k in 0..2 {
+    for k in 0..colors.len() {
         eng.objects.insert(format!("player_{}",k), Box::new(Object::RigidBody(RigidBody {
             shape: RigidShape::RECTANGLE(Rectangle {
                 pos: Vector2D {
-                    x: 300.,
-                    y: 500.,
+                    x: 50.* (k) as f64,
+                    y: 50.* (k) as f64 *5 as f64,
                 },
-                width: 200.,
-                height: 200.,
-                color: WHITE
+                width: 50.,
+                height: 50.,
+                color: colors[k]
             })
         })));
     }
