@@ -1,12 +1,11 @@
 mod my_engine;
 
-use my_engine::*;
 use opengl_graphics::*;
 use piston::*;
-use crate::my_engine::physics::{RigidBody, RigidShape, Object};
+use crate::my_engine::physics::{RigidBody, RigidShape, Object, Rectangle};
 use crate::my_engine::math::Vector2D;
 use graphics::line::Shape::Square;
-use crate::my_engine::physics::Object::RIGID_BODY;
+use crate::my_engine::*;
 
 //const
 const GREEN: [f32; 4] = [0.0, 1.0, 0.0, 1.0];
@@ -22,18 +21,29 @@ fn main() {
         })
     );
     //add a rigid body
-    eng.objects.insert("player".to_string(), Box::new(Object::RIGID_BODY(RigidBody {
-        pos: Vector2D { x: 2., y: 2. },
-        shape: RigidShape::RECTANGLE,
-    })));
+    for k in 0..2 {
+        eng.objects.insert(format!("player_{}",k), Box::new(Object::RigidBody(RigidBody {
+            shape: RigidShape::RECTANGLE(Rectangle {
+                pos: Vector2D {
+                    x: 300.,
+                    y: 500.,
+                },
+                width: 200.,
+                height: 200.,
+                color: WHITE
+            })
+        })));
+    }
 
     let mut events = Events::new(EventSettings::new());
 
     while let Some(e) = events.next(&mut eng.app.window) {
         if let Some(args) = e.render_args() {
-            if let RIGID_BODY(player) = eng.objects.get_mut("player").unwrap().as_mut() {
-                player.pos[0] += 1.;
-                player.pos[1] += 1.;
+            if let Object::RigidBody(player) = eng.objects.get_mut("player_1").unwrap().as_mut() {
+                if let RigidShape::RECTANGLE(s) = &mut player.shape {
+                    s.pos.x+=1.;
+                   // s.
+                }
             }
             eng.draw(&args);
         }

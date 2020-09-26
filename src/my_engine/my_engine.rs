@@ -17,16 +17,25 @@ impl MyEngine {
     }
 
     pub fn draw(&mut self, args: &RenderArgs) {
-        self.app.gl.draw(args.viewport(), |c, gl| {
-            /*for (_, x) in &self.objects {
-                for (_, y) in & self.objects {
-                    //dont detect collision for itself
-                  /*  if &x == &y {
-                        continue;
-                    }*/
-                    x.collides(y);
+
+        let context = self.app.gl.draw_begin(args.viewport());
+        //draw and check
+        {
+            let mut values:Vec<&mut Box<Object>> = self.objects.values_mut().collect();
+            let len = values.len();
+
+            if len < 2 { return; }
+
+            for x in 0..(len - 1) {
+                let mut l = values[x..len].iter_mut();
+                let x = l.next().unwrap();
+                for y in l {
+                    x.check_collisions(y);
                 }
-            }*/
-        })
+                x.draw(&context, &mut self.app.gl);
+            }
+        }
+        //end draw
+        self.app.gl.draw_end();
     }
 }
