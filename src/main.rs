@@ -68,11 +68,13 @@ fn main() {
     while let Some(e) = events.next(&mut eng.app.window) {
         if let Some(args) = e.render_args() {
             if let Object::RigidBody(player) = eng.objects.get_mut("player_1").unwrap().as_mut() {
-                if let RigidShape::RECTANGLE(s) = &mut player.shape {
-//                    s.pos.x+=1.;
-                   // s.
-                }
+               player.center.x+=2.;
             }
+            /*if let Object::RigidBody(player) = eng.objects.get_mut("player_2").unwrap().as_mut() {
+                player.center.y+=5.;
+                player.center.x-=1.;
+
+            }*/
             eng.draw(&args);
         }
     }
