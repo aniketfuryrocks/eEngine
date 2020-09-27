@@ -22,6 +22,6 @@ Shapes : Circle
 Laws : Collision
 ```
 
-### Goals out of scope of projects :
+### Goals out of scope :
 1. Camera movement
 2. Scaling
