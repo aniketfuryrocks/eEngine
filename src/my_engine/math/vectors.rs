@@ -1,5 +1,6 @@
 use std::ops::{Index, IndexMut};
 
+#[derive(Debug)]
 pub struct Vector2D<T> {
     pub x:T,
     pub y:T

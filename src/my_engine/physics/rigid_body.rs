@@ -10,15 +10,13 @@ const TIME: f64 = 1./60.;
 const G_CONST: f64 = 6.673e-11;
 
 pub struct Rectangle {
-    pub width: Scalar,
-    //m
-    pub height: Scalar,
-    //m
+    pub width: Scalar, //m
+    pub height: Scalar, //m
     pub color: [f32; 4],
 }
 
 impl Rectangle {
-    fn new() -> Rectangle {
+    fn new() -> self::Rectangle {
         Rectangle {
             width: 0.0,
             height: 0.0,
@@ -27,9 +25,8 @@ impl Rectangle {
     }
 }
 
-
 pub enum RigidShape {
-    RECTANGLE(Rectangle)
+    RECTANGLE(self::Rectangle)
 }
 
 pub struct RigidBody {
@@ -51,7 +48,7 @@ impl RigidBody {
                 (body2, self)
             } else {
                 (self, body2)
-            }
+           }
         };
         //calculate angle (radians) and distance between the 2
         let (sin_theta, cos_theta, r) = {
@@ -62,9 +59,12 @@ impl RigidBody {
             (theta.sin(), theta.cos(), distance)
         };
 
-        //calculate final velocity
-        body1.velocity = (G_CONST * body2.mass * TIME / r) + body1.velocity;
-        body2.velocity = (G_CONST * body1.mass * TIME / r) + body2.velocity;
+        {
+            let gtr_pro = (G_CONST * TIME)/ r;
+            //calculate final velocity
+            body1.velocity += body2.mass * gtr_pro;
+            body2.velocity += body1.mass * gtr_pro;
+        }
 
         //Sum of components
         {
@@ -74,8 +74,8 @@ impl RigidBody {
             let ax = s * cos_theta;//x component
             let ay = s * sin_theta;//y component
             //resultant
-            body1.center.x = ax + body1.center.x;
-            body1.center.y = ay + body1.center.y;
+            body1.center.x += ax;
+            body1.center.y += ay;
         }
 
         {
@@ -88,6 +88,8 @@ impl RigidBody {
             body2.center.x = body2.center.x - ax;
             body2.center.y = body2.center.y - ay;
         }
+
+        println!("{},{}",body1.velocity,body2.velocity);
     }
 }
 

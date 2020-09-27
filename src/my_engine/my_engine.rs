@@ -3,6 +3,8 @@ use crate::my_engine::{physics::*, app::*};
 use piston::{RenderArgs, Event, RenderEvent};
 use std::collections::{HashMap, HashSet};
 use graphics::clear;
+use std::thread::sleep;
+use std::time::Duration;
 
 pub struct MyEngine {
     pub app: App,
@@ -19,7 +21,7 @@ impl MyEngine {
 
     pub fn draw(&mut self, args: &RenderArgs) {
         let context = self.app.gl.draw_begin(args.viewport());
-        clear([0.,0.,0.,0.],&mut self.app.gl);
+        clear([0.,0.,0.,1.],&mut self.app.gl);
         //draw and check
         {
             let mut values:Vec<&mut Box<Object>> = self.objects.values_mut().collect();
@@ -38,5 +40,6 @@ impl MyEngine {
         }
         //end draw
         self.app.gl.draw_end();
+        //sleep(Duration::from_millis(700));
     }
 }
