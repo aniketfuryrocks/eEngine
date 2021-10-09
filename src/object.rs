@@ -1,26 +1,27 @@
-use crate::my_engine::physics::RigidBody;
 use graphics::Context;
 use opengl_graphics::GlGraphics;
+
+use crate::physics::RigidBody;
 
 pub enum Object {
     RigidBody(RigidBody),
 }
 
-pub trait ObjectProps {
+pub trait ObjectTrait: Into<Object> {
     fn draw(&self, c: &Context, g: &mut GlGraphics);
     fn check(&mut self, obj: &mut Object);
 }
 
-impl ObjectProps for Object {
+impl ObjectTrait for Object {
     fn draw(&self, c: &Context, g: &mut GlGraphics) {
         match self {
-            Object::RigidBody(r) => r.draw(c, g)
+            Object::RigidBody(r) => r.draw(c, g),
         }
     }
 
     fn check(&mut self, obj: &mut Object) {
         match self {
-            Object::RigidBody(r) => r.check(obj)
+            Object::RigidBody(r) => r.check(obj),
         }
     }
 }

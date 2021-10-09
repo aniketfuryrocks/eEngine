@@ -2,7 +2,11 @@
 name = "e_engine"
 version = "0.1.0"
 authors = ["aniketfuryrocks <prajapati.ani306@gmail.com>"]
-edition = "2018"
+edition = "2021"
+
+[[example]]
+name = "earth_moon"
+path = "./examples/earth_moon.rs"
 
 [dependencies]
 piston = "0.52.0"

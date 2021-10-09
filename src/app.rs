@@ -1,7 +1,6 @@
 use glutin_window::GlutinWindow;
-use piston::window::{WindowSettings};
+use piston::window::WindowSettings;
 use opengl_graphics::{GlGraphics, OpenGL};
-use piston::Events;
 
 pub struct AppSettings {
     pub window_settings: WindowSettings,
