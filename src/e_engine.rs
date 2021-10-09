@@ -30,7 +30,7 @@ impl eEngine {
             let mut iter = self.objects[i..len].iter_mut();
             let obj = iter.next().unwrap();
             for obj2 in iter {
-                obj.check(obj2);
+                obj.check(obj2, args.ext_dt);
             }
             obj.draw(&context, &mut self.app.gl);
         }

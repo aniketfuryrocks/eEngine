@@ -9,7 +9,7 @@ pub enum Object {
 
 pub trait ObjectTrait: Into<Object> {
     fn draw(&self, c: &Context, g: &mut GlGraphics);
-    fn check(&mut self, obj: &mut Object);
+    fn check(&mut self, obj: &mut Object, time: f64);
 }
 
 impl ObjectTrait for Object {
@@ -19,9 +19,9 @@ impl ObjectTrait for Object {
         }
     }
 
-    fn check(&mut self, obj: &mut Object) {
+    fn check(&mut self, obj: &mut Object, time: f64) {
         match self {
-            Object::RigidBody(r) => r.check(obj),
+            Object::RigidBody(r) => r.check(obj, time),
         }
     }
 }

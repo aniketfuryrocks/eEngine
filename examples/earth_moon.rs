@@ -18,14 +18,14 @@ fn main() {
     eng.objects.push(
         RigidBody {
             shape: Rectangle {
-                width: 20.,
-                height: 20.,
+                width: 30.,
+                height: 30.,
                 color: GREEN,
             }
             .into(),
             center: Vector2D { x: 350.0, y: 350.0 },
             mass: 6.673e11,
-            velocity: 1.,
+            velocity: 0.,
         }
         .into(),
     );
@@ -34,14 +34,46 @@ fn main() {
     eng.objects.push(
         RigidBody {
             shape: Rectangle {
-                width: 3.,
-                height: 3.,
+                width: 10.,
+                height: 10.,
                 color: WHITE,
             }
             .into(),
-            center: Vector2D { x: 500.4, y: 400.4 },
+            center: Vector2D { x: 400.4, y: 600.4 },
             mass: 6.673e9,
-            velocity: 1.,
+            velocity: 0.2,
+        }
+        .into(),
+    );
+
+    // moon 2
+    eng.objects.push(
+        RigidBody {
+            shape: Rectangle {
+                width: 10.,
+                height: 10.,
+                color: [0.4, 0.1, 0.3, 1.],
+            }
+            .into(),
+            center: Vector2D { x: 700.4, y: 500.4 },
+            mass: 6.673e8,
+            velocity: 3.,
+        }
+        .into(),
+    );
+    
+    // moon 3
+    eng.objects.push(
+        RigidBody {
+            shape: Rectangle {
+                width: 10.,
+                height: 10.,
+                color: [0.9, 0.2, 0.5, 1.],
+            }
+            .into(),
+            center: Vector2D { x: 200., y: 200. },
+            mass: 6.673e8,
+            velocity: 2.,
         }
         .into(),
     );
