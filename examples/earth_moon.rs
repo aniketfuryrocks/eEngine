@@ -18,65 +18,72 @@ fn main() {
     eng.objects.push(
         RigidBody {
             shape: Rectangle {
-                width: 30.,
-                height: 30.,
+                width: 10.,
+                height: 10.,
                 color: GREEN,
             }
             .into(),
-            center: Vector2D { x: 350.0, y: 350.0 },
-            mass: 6.673e11,
-            velocity: 0.,
+            center: Vector2D { x: 300.0, y: 300.0 },
+            mass: 4.659e4,
+            velocity: Default::default(),
         }
         .into(),
     );
 
-    // moon
+    // sun
     eng.objects.push(
         RigidBody {
             shape: Rectangle {
                 width: 10.,
                 height: 10.,
-                color: WHITE,
+                color: GREEN,
             }
             .into(),
-            center: Vector2D { x: 400.4, y: 600.4 },
-            mass: 6.673e9,
-            velocity: 0.2,
+            center: Vector2D { x: 600.0, y: 300.0 },
+            mass: 1.989e6,
+            velocity: Default::default(),
         }
         .into(),
     );
 
-    // moon 2
+    // sun
     eng.objects.push(
         RigidBody {
             shape: Rectangle {
                 width: 10.,
                 height: 10.,
-                color: [0.4, 0.1, 0.3, 1.],
+                color: GREEN,
             }
             .into(),
-            center: Vector2D { x: 700.4, y: 500.4 },
-            mass: 6.673e8,
-            velocity: 3.,
+            center: Vector2D { x: 100.0, y: 200.0 },
+            mass: 9.989e5,
+            velocity: Default::default(),
         }
         .into(),
     );
-    
-    // moon 3
-    eng.objects.push(
-        RigidBody {
-            shape: Rectangle {
-                width: 10.,
-                height: 10.,
-                color: [0.9, 0.2, 0.5, 1.],
+
+    for k in 1..20 {
+        eng.objects.push(
+            RigidBody {
+                shape: Rectangle {
+                    width: 10.,
+                    height: 10.,
+                    color: WHITE,
+                }
+                .into(),
+                center: Vector2D {
+                    x: 300.0 + (k * if k % 2 == 0 { -1 * k } else { k }) as f64,
+                    y: 350.038 + k as f64,
+                },
+                mass: 7.34e2 * k as f64,
+                velocity: Vector2D {
+                    x: -1.022e-20,
+                    y: 0.0,
+                },
             }
             .into(),
-            center: Vector2D { x: 200., y: 200. },
-            mass: 6.673e8,
-            velocity: 2.,
-        }
-        .into(),
-    );
+        );
+    }
 
     let mut events = Events::new(EventSettings::new());
 

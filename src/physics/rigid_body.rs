@@ -13,7 +13,7 @@ pub struct RigidBody {
     pub center: Vector2D<Scalar>,
     /// SI Units
     pub mass: Scalar,
-    pub velocity: Scalar,
+    pub velocity: Vector2D<Scalar>,
 }
 
 impl RigidBody {
@@ -22,7 +22,7 @@ impl RigidBody {
     /// For Body m1 final v = (G * m2 * T / r^2) + u;
     fn calc_gravitational_attraction(&mut self, body2: &mut RigidBody, time: f64) {
         let body1 = self;
-
+        let time = 86400.0e3 * time;
         //calculate angle (radians) and distance between the 2
         let (sin_theta, cos_theta, r) = {
             let perpendicular = body2.center.y - body1.center.y;
@@ -36,26 +36,21 @@ impl RigidBody {
         {
             let gtr_pro = (G_CONST * time) / (r * r);
             //calculate final velocity
-            body1.velocity += body2.mass * gtr_pro;
-            body2.velocity += body1.mass * gtr_pro;
-        }
+            let vel = body2.mass * gtr_pro;
+            let vel = Vector2D {
+                x: vel * cos_theta,
+                y: vel * sin_theta,
+            };
 
-        //Sum of components
-        {
-            //using Ax = A cos (theta)
-            let ax = body1.velocity * cos_theta; //x component
-            let ay = body1.velocity * sin_theta; //y component
+            body1.velocity += vel;
 
-            body1.center.x += ax;
-            body1.center.y += ay;
-        }
+            let vel = body1.mass * gtr_pro;
+            let vel = Vector2D {
+                x: vel * cos_theta,
+                y: vel * sin_theta,
+            };
 
-        {
-            let ax = body2.velocity * sin_theta; //x component sin (q - 90) = cos
-            let ay = body2.velocity * cos_theta; //y component
-
-            body2.center.x -= ax;
-            body2.center.y += ay;
+            body2.velocity += vel * -1.0f64;
         }
     }
 }
@@ -82,6 +77,10 @@ impl ObjectTrait for RigidBody {
                 self.calc_gravitational_attraction(b, time);
             }
         }
+    }
+
+    fn calc_pos(&mut self, time: f64) {
+        self.center += self.velocity * time;
     }
 }
 

@@ -29,9 +29,12 @@ impl eEngine {
         for i in 0..len {
             let mut iter = self.objects[i..len].iter_mut();
             let obj = iter.next().unwrap();
+            let time = 1.0 / 25.0;
+
             for obj2 in iter {
-                obj.check(obj2, args.ext_dt);
+                obj.check(obj2, time);
             }
+            obj.calc_pos(time);
             obj.draw(&context, &mut self.app.gl);
         }
         //end draw
