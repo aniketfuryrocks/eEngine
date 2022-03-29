@@ -1,5 +1,5 @@
 [package]
-name = "e_engine"
+name = "physics_sim"
 version = "0.1.0"
 authors = ["aniketfuryrocks <prajapati.ani306@gmail.com>"]
 edition = "2021"
@@ -9,7 +9,7 @@ name = "earth_moon"
 path = "./examples/earth_moon.rs"
 
 [dependencies]
-piston = "0.52.0"
-piston2d-graphics = "0.37.0"
-pistoncore-glutin_window = "0.66.0"
-piston2d-opengl_graphics = "0.74.0"
+piston = "0.53.1"
+piston2d-graphics = "0.42.0"
+pistoncore-glutin_window = "0.69.0"
+piston2d-opengl_graphics = "0.81.0"

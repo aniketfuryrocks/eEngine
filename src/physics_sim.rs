@@ -4,13 +4,12 @@ use super::App;
 use graphics::clear;
 use piston::RenderArgs;
 
-#[allow(non_camel_case_types)]
-pub struct eEngine {
+pub struct PhysicsSim {
     pub app: App,
     pub objects: Vec<Object>,
 }
 
-impl eEngine {
+impl PhysicsSim {
     pub fn new(app: App) -> Self {
         Self {
             app,
@@ -19,7 +18,7 @@ impl eEngine {
     }
 }
 
-impl eEngine {
+impl PhysicsSim {
     pub fn draw(&mut self, args: &RenderArgs) {
         let context = self.app.gl.draw_begin(args.viewport());
         clear([0., 0., 0., 1.], &mut self.app.gl);

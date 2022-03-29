@@ -3,9 +3,9 @@ pub mod physics;
 pub mod shape;
 
 mod app;
-mod e_engine;
 mod object;
+mod physics_sim;
 
 pub use app::*;
-pub use e_engine::*;
 pub use object::*;
+pub use physics_sim::*;
