@@ -1,4 +1,6 @@
-use std::ops::{Add, AddAssign, Index, IndexMut, Mul};
+use std::ops::{Add, AddAssign, Div, Index, IndexMut, Mul, Sub};
+
+use graphics::math::Scalar;
 
 #[derive(Debug, Default, Clone, Copy)]
 pub struct Vector2D<T> {
@@ -13,6 +15,17 @@ impl<T: Add<Output = T>> Add for Vector2D<T> {
         Self {
             x: self.x + rhs.x,
             y: self.y + rhs.y,
+        }
+    }
+}
+
+impl<T: Sub<Output = T>> Sub for Vector2D<T> {
+    type Output = Vector2D<T>;
+
+    fn sub(self, rhs: Self) -> Self::Output {
+        Self {
+            x: self.x - rhs.x,
+            y: self.y - rhs.y,
         }
     }
 }
@@ -36,14 +49,42 @@ impl<T> Index<i8> for Vector2D<T> {
     }
 }
 
-impl<T: Mul<Output = T> + Clone> Mul<T> for Vector2D<T> {
+/// dot product
+impl Mul<Vector2D<Scalar>> for Vector2D<Scalar> {
+    type Output = Scalar;
+
+    fn mul(self, rhs: Vector2D<Scalar>) -> Self::Output {
+        (self.x * rhs.x) + (self.y * rhs.y)
+    }
+}
+
+/// multiplication with scalar
+impl Mul<Scalar> for Vector2D<Scalar> {
     type Output = Self;
 
-    fn mul(self, rhs: T) -> Self::Output {
+    fn mul(self, rhs: Scalar) -> Self::Output {
         Self {
-            x: self.x * rhs.clone(),
-            y: self.y * rhs,
+            x: (self.x * rhs),
+            y: (self.y * rhs),
         }
+    }
+}
+
+/// divide with scalar
+impl Div<Scalar> for Vector2D<Scalar> {
+    type Output = Self;
+
+    fn div(self, rhs: Scalar) -> Self::Output {
+        Self {
+            x: (self.x / rhs),
+            y: (self.y / rhs),
+        }
+    }
+}
+
+impl Into<Scalar> for Vector2D<Scalar> {
+    fn into(self) -> Scalar {
+        ((self.x * self.x) + (self.y * self.y)).sqrt()
     }
 }
 

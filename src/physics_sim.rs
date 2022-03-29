@@ -25,13 +25,14 @@ impl PhysicsSim {
         //draw and check
         let len = self.objects.len();
 
+        let time = 200.0;
+
         for i in 0..len {
             let mut iter = self.objects[i..len].iter_mut();
             let obj = iter.next().unwrap();
-            let time = 1.0 / 25.0;
 
             for obj2 in iter {
-                obj.check(obj2, time);
+                obj.check(obj2);
             }
             obj.calc_pos(time);
             obj.draw(&context, &mut self.app.gl);

@@ -5,7 +5,6 @@ use graphics::math::Scalar;
 use graphics::*;
 use opengl_graphics::*;
 
-//time for 1 frame in 60 fps for 1 second windows
 const G_CONST: f64 = 6.673e-11;
 
 pub struct RigidBody {
@@ -17,41 +16,27 @@ pub struct RigidBody {
 }
 
 impl RigidBody {
-    /// Calculate attraction between two bodies using newtons law
-    /// Formulae ->
-    /// For Body m1 final v = (G * m2 * T / r^2) + u;
-    fn calc_gravitational_attraction(&mut self, body2: &mut RigidBody, time: f64) {
-        let body1 = self;
-        let time = 86400.0e3 * time;
-        //calculate angle (radians) and distance between the 2
-        let (sin_theta, cos_theta, r) = {
-            let perpendicular = body2.center.y - body1.center.y;
-            let base = body2.center.x - body1.center.x;
-            let r: f64 = ((perpendicular * perpendicular) + (base * base)).sqrt();
-            // sin q = perpendicular / hypotenuse
-            // cos q = base / hypotenuse
-            (perpendicular / r, base / r, r)
-        };
+    fn add_force(&mut self, force: &Vector2D<Scalar>) {
+        self.velocity += *force / self.mass;
+    }
 
-        {
-            let gtr_pro = (G_CONST * time) / (r * r);
-            //calculate final velocity
-            let vel = body2.mass * gtr_pro;
-            let vel = Vector2D {
-                x: vel * cos_theta,
-                y: vel * sin_theta,
-            };
+    fn calc_gravitational_force(&self, body2: &mut RigidBody) -> Vector2D<Scalar> {
+        let radius = body2.center - self.center;
 
-            body1.velocity += vel;
+        let radius_mag: Scalar = radius.clone().into();
 
-            let vel = body1.mass * gtr_pro;
-            let vel = Vector2D {
-                x: vel * cos_theta,
-                y: vel * sin_theta,
-            };
+        let force = (G_CONST * self.mass * body2.mass) / (radius_mag * radius_mag);
 
-            body2.velocity += vel * -1.0f64;
+        Vector2D {
+            x: force * radius.x,
+            y: force * radius.y,
         }
+    }
+
+    fn calc_gravitational_attraction(&mut self, body2: &mut RigidBody) {
+        let force = self.calc_gravitational_force(body2);
+        self.add_force(&force);
+        body2.add_force(&(force * -1.0));
     }
 }
 
@@ -61,7 +46,7 @@ impl ObjectTrait for RigidBody {
             Shape::RECTANGLE(r) => {
                 g.tri_list(&c.draw_state, &r.color, |k| {
                     let x = self.center.x - (r.width / 2.);
-                    let y = self.center.y + (r.height / 2.);
+                    let y = self.center.y - (r.height / 2.);
                     k(&triangulation::rect_tri_list_xy(
                         c.transform,
                         [x, y, r.width, r.height],
@@ -71,10 +56,10 @@ impl ObjectTrait for RigidBody {
         }
     }
 
-    fn check(&mut self, obj: &mut Object, time: f64) {
+    fn check(&mut self, obj: &mut Object) {
         match obj {
             Object::RigidBody(b) => {
-                self.calc_gravitational_attraction(b, time);
+                self.calc_gravitational_attraction(b);
             }
         }
     }

@@ -22,11 +22,11 @@ fn main() {
             shape: Rectangle {
                 width: 10.,
                 height: 10.,
-                color: GREEN,
+                color: WHITE,
             }
             .into(),
             center: Vector2D { x: 300.0, y: 300.0 },
-            mass: 4.659e4,
+            mass: 20000.659e4,
             velocity: Default::default(),
         }
         .into(),
@@ -64,28 +64,28 @@ fn main() {
         .into(),
     );
 
-    //    for k in 1..20 {
-    //        eng.objects.push(
-    //            RigidBody {
-    //                shape: Rectangle {
-    //                    width: 10.,
-    //                    height: 10.,
-    //                    color: WHITE,
-    //                }
-    //                .into(),
-    //                center: Vector2D {
-    //                    x: 300.0 + (k * if k % 2 == 0 { -1 * k } else { k }) as f64,
-    //                    y: 350.038 + k as f64,
-    //                },
-    //                mass: 7.34e2 * k as f64,
-    //                velocity: Vector2D {
-    //                    x: -1.022e-20,
-    //                    y: 0.0,
-    //                },
-    //            }
-    //            .into(),
-    //        );
-    //    }
+    for k in 1..20 {
+        eng.objects.push(
+            RigidBody {
+                shape: Rectangle {
+                    width: 10.,
+                    height: 10.,
+                    color: WHITE,
+                }
+                .into(),
+                center: Vector2D {
+                    x: 300.0 + (k * if k % 2 == 0 { -1 * k } else { k }) as f64,
+                    y: 350.038 + k as f64,
+                },
+                mass: 2.34e2 * k as f64,
+                velocity: Vector2D {
+                    x: -1.022e-20,
+                    y: 0.0,
+                },
+            }
+            .into(),
+        );
+    }
 
     let mut events = Events::new(EventSettings::new());
 
